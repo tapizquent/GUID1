@@ -12,13 +12,18 @@ class GUID extends Equatable {
   ///
   /// Throws `AssertionError` if `value` is of invalid format and cannot be parsed
   GUID.fromValue(String value) : this._value = value {
-    assert(_checkValidGUIDValue(value),
+    assert(_isValidGUIDValue(value),
         'value is of invalid format and cannot be parsed in GUID');
   }
 
-  const GUID.forceValue(String value) : this._value = value;
+  /// Tries to generate a GUID from the value passed. If the value is not of
+  /// proper GUID format, is empty, or cannot be serialized, it will return null
+  static GUID? tryFromValue(String value) =>
+      _isValidGUIDValue(value) ? GUID.fromValue(value) : null;
 
-  static const empty = GUID.forceValue(Uuid.NAMESPACE_NIL);
+  const GUID._forceValue(String value) : this._value = value;
+
+  static const empty = GUID._forceValue(Uuid.NAMESPACE_NIL);
 
   @override
   String toString() => _value;
@@ -26,7 +31,9 @@ class GUID extends Equatable {
   @override
   List<Object> get props => [_value];
 
-  bool _checkValidGUIDValue(String value) {
+  static bool _isValidGUIDValue(String value) {
+    if (value.isEmpty) return false;
+
     final RegExp _guidRegExp = RegExp(
         r'^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$');
     return _guidRegExp.hasMatch(value);

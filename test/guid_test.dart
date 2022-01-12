@@ -39,8 +39,24 @@ void main() {
     });
   });
 
+  group('tryFromValue', () {
+    test('When invalid form, returns null', () {
+      String invalidGuid = "121212-3222";
+
+      expect(() => GUID.tryFromValue(invalidGuid), returnsNormally);
+      expect(GUID.tryFromValue(invalidGuid), isNull);
+    });
+
+    test('When valid GUID string, should build GUID with correct value', () {
+      String validGuid = "2b3e94ce-4c93-449f-9154-6fbb968fdbe5";
+
+      expect(() => GUID.tryFromValue(validGuid), returnsNormally);
+      expect(GUID.tryFromValue(validGuid).toString(), validGuid);
+    });
+  });
+
   group('empty', () {
-    test('GUID.empty() should build GUID with all zeros and proper form', () {
+    test('GUID.empty should build GUID with all zeros and proper form', () {
       GUID emptyGuid = GUID.empty;
 
       expect(emptyGuid, GUID.fromValue("00000000-0000-0000-0000-000000000000"));
