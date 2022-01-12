@@ -16,8 +16,9 @@ class GUID extends Equatable {
         'value is of invalid format and cannot be parsed in GUID');
   }
 
-  /// Creates an empty GUID with value: 00000000-0000-0000-0000-000000000000
-  GUID.empty() : _value = Uuid.NAMESPACE_NIL;
+  const GUID.forceValue(String value) : this._value = value;
+
+  static const empty = GUID.forceValue(Uuid.NAMESPACE_NIL);
 
   @override
   String toString() => _value;

@@ -41,7 +41,7 @@ void main() {
 
   group('empty', () {
     test('GUID.empty() should build GUID with all zeros and proper form', () {
-      GUID emptyGuid = GUID.empty();
+      GUID emptyGuid = GUID.empty;
 
       expect(emptyGuid, GUID.fromValue("00000000-0000-0000-0000-000000000000"));
     });
@@ -49,7 +49,7 @@ void main() {
 
   group('ToString', () {
     test('should provide value of GUID', () {
-      GUID emptyGuid = GUID.empty();
+      GUID emptyGuid = GUID.empty;
 
       expect(emptyGuid.toString(), "00000000-0000-0000-0000-000000000000");
     });
